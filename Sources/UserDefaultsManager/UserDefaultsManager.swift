@@ -17,8 +17,11 @@ public class UserDefaultsManager {
         self.storage = storage
     }
 
-    public func save(this data: Any?, to key: String) {
+    public func save(this data: Any?, to key: String, synchronize: Bool = false) {
         storage.set(data, forKey: key)
+        if synchronize {
+            storage.synchronize()
+        }
     }
 
     public func getString(from key: String) -> String? {
