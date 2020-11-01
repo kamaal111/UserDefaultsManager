@@ -7,11 +7,9 @@
 
 import Foundation
 
-public class UserDefaultsManager {
+public struct UserDefaultsManager {
 
     public var storage: UserDefaults
-
-    private var jsonDecoder: JSONDecoder?
 
     public init(storage: UserDefaults = UserDefaults.standard) {
         self.storage = storage
@@ -46,11 +44,7 @@ public class UserDefaultsManager {
 
     public func getDecodedObject<T: Decodable>(from key: String) -> T? {
         guard let data: Data = getObject(from: key) else { return nil }
-        if let jsonDecoder = jsonDecoder {
-            return try? jsonDecoder.decode(T.self, from: data)
-        }
         let jsonDecoder = JSONDecoder()
-        self.jsonDecoder = jsonDecoder
         return try? jsonDecoder.decode(T.self, from: data)
     }
 
